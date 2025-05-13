@@ -1,12 +1,12 @@
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 import re
 import urllib.parse
 import os
 import httpx
 import logging
-from typing import Optional, Dict, Any
+from typing import Dict, Any, Union
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -46,7 +46,7 @@ def clean_url(url: str) -> str:
         return url
     return url
 
-def extract_video_id(url: str) -> Optional[str]:
+def extract_video_id(url: str) -> Union[str, None]:
     """Extract video ID from various Douyin URL formats"""
     video_pattern = re.search(r'/(?:video|note)/(\d+)', url)
     if video_pattern:
